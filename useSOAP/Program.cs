@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using System.Xml.XPath;
 class Program
 {
-    static async Task Main(string[] args)
+    static async Task MainTesting(string[] args)
     {
         int result = await SOAPAdd(5, 3);
         Console.WriteLine("Result: " + result);
