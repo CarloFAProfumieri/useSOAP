@@ -16,8 +16,8 @@ namespace useSOAP
                 101,
                 "api-xyz",
                 456,
-                "MAT12345",
-                "Dr. Juan Pérez"
+                "153413",
+                "Dr. Eggman"
             );
             Console.WriteLine(medicoEnvelope.getEnvelope());
             
