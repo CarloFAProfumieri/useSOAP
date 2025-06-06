@@ -19,29 +19,16 @@ namespace useSOAP
                 "153413",
                 "Dr. Eggman"
             );
-            Console.WriteLine(medicoEnvelope.getEnvelope());
+            var envelope = medicoEnvelope.GetEnvelope();
+            Console.WriteLine(envelope.ToString());
+            var respuesta = await CallSoap(envelope);
             
-            //int result = await AddAsync(5, 3);
-            //Console.WriteLine("Result: " + result);
+            Console.WriteLine("responte: " + respuesta);
         }
-        static async Task<int> AddAsync(int a, int b)
+        static async Task<int> CallSoap(XDocument envelope)
         {
-            XNamespace soapenv = "http://schemas.xmlsoap.org/soap/envelope/";
-            XNamespace tem = "http://tempuri.org/";
-            var soapRequestXml = new XDocument(
-                new XElement(soapenv + "Envelope",
-                    new XAttribute(XNamespace.Xmlns + "soapenv", soapenv),
-                    new XAttribute(XNamespace.Xmlns + "tem", tem),
-                    new XElement(soapenv + "Header"),
-                    new XElement(soapenv + "Body",
-                        new XElement(tem + "Add",
-                            new XElement(tem + "intA", a),
-                            new XElement(tem + "intB", b)
-                        )
-                    )
-                )
-            );
-            string soapRequestString = soapRequestXml.Declaration + soapRequestXml.ToString();
+            
+            string soapRequestString = envelope.Declaration + envelope.ToString();
             var httpClient = new HttpClient();
             var content = new StringContent(soapRequestString, Encoding.UTF8, "text/xml");
 
@@ -102,7 +89,7 @@ namespace useSOAP
             this.nombre = nombre;
         }
             
-        public string getEnvelope()
+        public XDocument GetEnvelope()
         {
             XNamespace envNamespace = "http://schemas.xmlsoap.org/soap/envelope/";
             XNamespace wsl = "https://www.santafe.gob.ar/labcentral/ws/WSLabCentralApi/";
@@ -124,7 +111,7 @@ namespace useSOAP
                         )
                     )
                 );
-            return soapEnvelope.ToString();
+            return soapEnvelope;
         }
     }
 }
